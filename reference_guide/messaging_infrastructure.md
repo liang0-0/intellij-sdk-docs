@@ -1,36 +1,36 @@
 ---
-title: Messaging infrastructure
+title: 消息系统基础框架
 ---
 
 
-# Purpose
+# 目的
 
-The purpose of this document is to introduce the messaging infrastructure available in the IntelliJ Platform to developers and plugin writers. It is intended to answer why, when and how to use it.
+本文介绍了消息系统基础架构，主要为开发者以及插件开发者阅读。它旨在回答为什么、何时以及如何使用它。
 
-# Rationale
 
-So, what is messaging in the IntelliJ Platform and why do we need it? Basically, its implementation of
-[Observer pattern](https://en.wikipedia.org/wiki/Observer_pattern)
-that provides additional features like _broadcasting on hierarchy_ and special _nested events_ processing (_nested event_ here is a situation when new event is fired (directly or indirectly) from the callback of another event).
+# 理论基础
 
-# Design
+那么，什么是以及为什么我要使用消息系统？ 实际上消息系统使用了[观察者模式](https://en.wikipedia.org/wiki/Observer_pattern)
+而且还提供了额外的特性， 比如光爆， 集成， 内嵌事件处理(内嵌事件说的是在一个发生的事件中再次触发了事件，即事件中的事件).
 
-Here are the main components of the messaging API.
+# 设计
+
+这里有消息系统API的主要组件
 
 ## Topic
 
-This class serves as an endpoint at the messaging infrastructure. I.e. clients are allowed to subscribe to the topic within particular bus and to send messages to particular topic within particular bus.
+这个类属于消息系统的端点（endPoint）.即 客户端允许在particular bus内注册 topic，然后在particular bus中发送消息。
 
 ![Topic](img/topic.png)
 
-*  *display name*  just a human-readable name used for logging/monitoring purposes;
-*  *broadcast direction*  will be explained in details at Broadcasting. Default value is *TO\_CHILDREN*;
-*  *listener class*  that is a business interface for particular topic.
-Subscribers register implementation of this interface at the messaging infrastructure and publishers may later retrieve object that conforms (IS-A) to it and call any method defined there. Messaging infrastructure takes care on dispatching that to all subscribers of the topic, i.e. the same method with the same arguments will be called on the registered callbacks;
+*  *显示名称：display name*  就是一个能看得懂的名称，主要目的是为打印日志以及监控中使用到；
+*  *广播方向：broadcast direction*  在广播那里会详细解释。默认值为 *TO\_CHILDREN*;
+*  *监听类：listener class*  是特定topic的业务相关的接口。
+在消息系统中，订阅者注册这个监听接口的实现，然后发布者稍后可以检索符合（IS-A）的对象，并调用在那里定义的任何方法。消息传递基础结构负责将消息分发给主题的所有订户，即在已注册的回调上调用具有相同参数的相同方法；
 
-## Message bus
+## 消息总线
 
-Is the core of the messaging system. Is used at the following scenarios:
+消息系统中的核心。主要用于以下场景：
 
 ![Bus](img/bus.png)
 
