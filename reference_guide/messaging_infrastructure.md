@@ -32,13 +32,13 @@ title: 消息系统基础框架
 
 消息系统中的核心。主要用于以下场景：
 
-![消息总线](img/bus.png)
+![Bus](img/bus.png)
 
 ## 连接管理
 
 管理在特定消息总线中的所用订阅的客户端。
 
-![连接关系](img/connection.png)
+![Connection](img/connection.png)
 
 *  保存多个 *topic handler* 映射关系 (当topic收到消息后，找到对应的handler进行回调)
 *注意*: 在同一个连接中， 每个topic的handler不会超过一个；
@@ -49,7 +49,7 @@ title: 消息系统基础框架
 *  可以显性释放获取的资源(使用 *disconnect()* 方法).
 也可以放入标准的半自动处置 
 (
-[处置](upsource:///platform/util/src/com/intellij/openapi/Disposable.java)
+[Disposable](upsource:///platform/util/src/com/intellij/openapi/Disposable.java)
 );
 
 ## 把以上内容放在一起看
@@ -68,7 +68,7 @@ public interface ChangeActionNotifier {
 
 *订阅*
 
-![订阅](img/subscribe.png)
+![Subscribing](img/subscribe.png)
 
 ```java
 public void init(MessageBus bus) {
@@ -87,7 +87,7 @@ public void init(MessageBus bus) {
 
 *发布*
 
-![发布](img/publish.png)
+![Publishing](img/publish.png)
 
 ```java
 public void doChange(Context context) {
@@ -120,13 +120,13 @@ public void doChange(Context context) {
 
 可以将消息总线组织成层次结构。此外, *IntelliJ Platform* 已经有了一些现成的:
 
-![标准层次](img/standard-hierarchy.png)
+![Standard hierarchy](img/standard-hierarchy.png)
 
 消息总线之间的消息，可以使用这种方式收到通知。
 
 *例子:*
 
-![父子广播消息](img/parent-child-broadcast.png)
+![Parent-child broadcast](img/parent-child-broadcast.png)
 
 Here we have a simple hierarchy (*application bus* is a parent of *project bus*) with three subscribers for the same topic.
 
