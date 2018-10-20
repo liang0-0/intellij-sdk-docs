@@ -32,29 +32,29 @@ title: 消息系统基础框架
 
 消息系统中的核心。主要用于以下场景：
 
-![Bus](img/bus.png)
+![消息总线](img/bus.png)
 
-## Connection
+## 连接管理
 
-Manages all subscriptions for particular client within particular bus.
+管理在特定消息总线中的所用订阅的客户端。
 
-![Connection](img/connection.png)
+![连接关系](img/connection.png)
 
-*  keeps number of *topic handler* mappings (callbacks to invoke when message for the target topic is received)
-*Note*: not more than one handler per-topic within the same connection is allowed;
+*  保存多个 *topic handler* 映射关系 (当topic收到消息后，找到对应的handler进行回调)
+*注意*: 在同一个连接中， 每个topic的handler不会超过一个；
 
-*  it's possible to specify *default handler* and subscribe to the target topic without explicitly provided callback.
-Connection will use that *default handler* when storing *(topic-handler)* mapping;
+*  可以指定 *default handler* ，这时当topic有消息是，不会有回调。
+连接管理中，在存储*(topic-handler)* 映射时，会使用默认的*default handler*;
 
-*  it's possible to explicitly release acquired resources (*disconnect()* method).
-Also it can be plugged to standard semi-automatic disposing 
+*  可以显性释放获取的资源(使用 *disconnect()* 方法).
+也可以放入标准的半自动处置 
 (
-[Disposable](upsource:///platform/util/src/com/intellij/openapi/Disposable.java)
+[处置](upsource:///platform/util/src/com/intellij/openapi/Disposable.java)
 );
 
-## Putting altogether
+## 把以上内容放在一起看
 
-*Defining business interface and topic*
+*定义业务接口和topic*
 
 ```java
 public interface ChangeActionNotifier {
@@ -66,9 +66,9 @@ public interface ChangeActionNotifier {
 }
 ```
 
-*Subscribing*
+*订阅*
 
-![Subscribing](img/subscribe.png)
+![订阅](img/subscribe.png)
 
 ```java
 public void init(MessageBus bus) {
@@ -85,9 +85,9 @@ public void init(MessageBus bus) {
 }
 ```
 
-*Publishing*
+*发布*
 
-![Publishing](img/publish.png)
+![发布](img/publish.png)
 
 ```java
 public void doChange(Context context) {
@@ -102,31 +102,31 @@ public void doChange(Context context) {
 }
 ```
 
-*Existing resources*
+*现有资源*
 
-*  *MessageBus* instances are available via
+*  获取 *MessageBus* 实例可以通过
 [ComponentManager.getMessageBus()](upsource:///platform/core-api/src/com/intellij/openapi/components/ComponentManager.java)<!--#L85-->
-(many standard interfaces implement it, e.g.
+(很多标准的接口实现了它，比如
 [Application](upsource:///platform/core-api/src/com/intellij/openapi/application/Application.java),
 [Project](upsource:///platform/core-api/src/com/intellij/openapi/project/Project.java);
 
-*  number of public topics are used by the *IntelliJ Platform*, e.g.
+*  *IntelliJ Platform* 也使用了很过公用的topic, 比如：
 [AppTopics](upsource:///platform/platform-api/src/com/intellij/AppTopics.java),
 [ProjectTopics](upsource:///platform/projectModel-api/src/com/intellij/ProjectTopics.java)
-etc.
-So, it's possible to subscribe to them in order to receive information about the processing;
+等等.
+所以，如果想处理这些消息，也可以订阅它们；
 
-# Broadcasting
+# 广播
 
-Message buses can be organised into hierarchies. Moreover, the *IntelliJ Platform* has them already:
+可以将消息总线组织成层次结构。此外, *IntelliJ Platform* 已经有了一些现成的:
 
-![Standard hierarchy](img/standard-hierarchy.png)
+![标准层次](img/standard-hierarchy.png)
 
-That allows to notify subscribers registered in one message bus on messages sent to another message bus.
+消息总线之间的消息，可以使用这种方式收到通知。
 
-*Example:*
+*例子:*
 
-![Parent-child broadcast](img/parent-child-broadcast.png)
+![父子广播消息](img/parent-child-broadcast.png)
 
 Here we have a simple hierarchy (*application bus* is a parent of *project bus*) with three subscribers for the same topic.
 
