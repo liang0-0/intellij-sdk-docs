@@ -2,38 +2,38 @@
 title: Getting Started with Gradle
 ---
 
-Adding Gradle build support to an IntelliJ Platform Plugin requires a recent distribution to the Gradle build system and IntelliJ IDEA (Community or Ultimate).
+Adding Gradle build support to an IntelliJ Platform Plugin requires a recent distribution of the Gradle build system and IntelliJ IDEA (Community or Ultimate).
 
 ### 1.0 Download and Install IntelliJ IDEA
 
 Download and install either IntelliJ IDEA Ultimate or the IntelliJ IDEA Community Edition.
 
-### 1.1 Ensure the Gradle Plugin and 'Plugin DevKit' Plugin are Enabled
+### 1.1 Ensure that 'Gradle' and 'Plugin DevKit' Plugins are Enabled
 
 You can verify that the plugins are enabled by visiting **Settings \| Plugins**.
 
-<img src="img/step0_gradle_enabled.png" alt="Ensure the Gradle plugin is enabled" width="858px"/>
+![Ensure the Gradle plugin is enabled](img/step0_gradle_enabled.png){:width="858px"}
 
 ### 1.2 Create a Plugin Project from Scratch
 
-IntelliJ IDEA supports automatically creating new plugin projects using Gradle, with all the necessary build.gradle
+IntelliJ IDEA supports automatically creating new plugin projects using Gradle, with all the necessary `build.gradle`
 setup performed automatically. This can also be used to convert an existing plugin to Gradle, if Gradle is not able to 
 convert the existing project - in this case, you need to copy over the sources to the new project.
 
 To do so, create a new project in IntelliJ IDEA by opening **File \| New... \| Project**, and select Gradle from the dialog box.
 In the "Additional Libraries and Frameworks" page, check "IntelliJ Platform Plugin".
 
-<img src="img/step1_new_gradle_project.png" alt="Select the Gradle facet in the Project Creation Wizard" width="800px"/>
+![Select the Gradle facet in the Project Creation Wizard](img/step1_new_gradle_project.png){:width="800px"}
 
 The Project Creation Wizard will now guide you through the Gradle project creation process. You will need to specify a Group ID, Artifact ID, and Version:
 
-<img src="img/step2_group_artifact_version.png" alt="Specify the Group, Artifact, and Version IDs" width="800px"/>
+![Specify the Group, Artifact, and Version IDs](img/step2_group_artifact_version.png){:width="800px"}
 
 It’s recommended to select the `Use default gradle wrapper` option, that way IntelliJ IDEA will install everything you need to run Gradle tasks itself.
 
 Finally, specify a JVM Gradle will use, it can be the Project JDK. You also configure this path once the project is created via **Settings \| Build, Execution, Deployment \| Build Tools \| Gradle**.
 
-<img src="img/step3_gradle_config.png" alt="Verify the JVM is the correct version" width="800px"/>
+![Verify the JVM is the correct version](img/step3_gradle_config.png){:width="800px"}
 
 ### 1.3 Configuring a Gradle Plugin Project
 Support for Gradle-based plugin projects is provided by the IntelliJ Platform `gradle-intellij-plugin`.
@@ -59,7 +59,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "0.3.0"
+    id "org.jetbrains.intellij" version "0.4.5"
 }
 
 apply plugin: 'idea'
@@ -86,9 +86,10 @@ This will clean any existing IntelliJ IDEA configuration files and generate a ne
 
 ### 1.5 Running a Simple Plugin
 
-Now add a new `HelloAction` class and `plugin.xml` in the `META-INF` folder:
+Now add a new `HelloAction` class to the Java folder, and `plugin.xml` and `pluginIcon.svg` files in the `META-INF` folder.
+For more information about `pluginIcon.svg` files, see the [Plugin Icon](/basics/plugin_structure/plugin_icon_file.md) page.
 
-<img src="img/gradle_directory_structure.png" alt="Gradle directory structure" width="374px"/>
+![Gradle directory structure](img/gradle_directory_structure.png){:width="374px"}
 
 ```java
 {% include /code_samples/gradle_plugin_demo/src/main/java/HelloAction.java %}
@@ -100,14 +101,14 @@ Now add a new `HelloAction` class and `plugin.xml` in the `META-INF` folder:
 
 Open the Gradle tool window and search for `runIde` task. If it’s not in the list, please hit `Refresh` button on the top. Double-click on it to run it.
 
-<img src="img/gradle_tasks_in_tool_window.png" alt="Gradle Tool Window" width="398px"/>
+![Gradle Tool Window](img/gradle_tasks_in_tool_window.png){:width="398px"}
 
 Or add a new Gradle Run Configuration, configured like so:
 
-<img src="img/gradle_run_config.png" alt="Gradle Run Configuration" width="800px"/>
+![Gradle Run Configuration](img/gradle_run_config.png){:width="800px"}
 
 Launch the new Gradle Run Configuration. From the Run Window, the following output should be visible.
 
-<img src="img/launched.png" alt="Gradle task output" width="800px"/>
+![Gradle task output](img/launched.png){:width="800px"}
 
 Finally, when the IDE launches, there should be a new menu to the right of the **Help** menu. Your plugin is now configured on Gradle.
