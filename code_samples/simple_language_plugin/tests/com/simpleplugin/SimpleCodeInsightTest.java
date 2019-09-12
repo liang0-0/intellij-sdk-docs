@@ -1,11 +1,11 @@
 package com.simpleplugin;
 
-import com.intellij.application.options.CodeStyle;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.codeInsight.generation.actions.CommentByLineCommentAction;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.codeStyle.CodeStyleManager;
+import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.usageView.UsageInfo;
 import com.intellij.util.containers.ContainerUtil;
@@ -22,7 +22,9 @@ public class SimpleCodeInsightTest extends LightCodeInsightFixtureTestCase {
   }
 
   @Override
-  protected String getTestDataPath() { return "testData"; }
+  protected String getTestDataPath() {
+    return "code_samples/simple_language_plugin/testData";
+  }
 
   public void testCompletion() {
     myFixture.configureByFiles("CompleteTestData.java", "DefaultTestData.simple");
@@ -39,12 +41,15 @@ public class SimpleCodeInsightTest extends LightCodeInsightFixtureTestCase {
 
   public void testFormatter() {
     myFixture.configureByFiles("FormatterTestData.simple");
-    CodeStyle.getLanguageSettings(myFixture.getFile()).SPACE_AROUND_ASSIGNMENT_OPERATORS = true;
-    CodeStyle.getLanguageSettings(myFixture.getFile()).KEEP_BLANK_LINES_IN_CODE = 2;
-    WriteCommandAction.writeCommandAction(getProject()).run(() -> {
-      CodeStyleManager.getInstance(getProject()).reformatText(myFixture.getFile(),
-                                   ContainerUtil.newArrayList(myFixture.getFile().getTextRange()));
-    });
+    CodeStyleSettingsManager.getSettings(getProject()).SPACE_AROUND_ASSIGNMENT_OPERATORS = true;
+    CodeStyleSettingsManager.getSettings(getProject()).KEEP_BLANK_LINES_IN_CODE = 2;
+    new WriteCommandAction.Simple(getProject()) {
+      @Override
+      protected void run() throws Throwable {
+        CodeStyleManager.getInstance(getProject()).reformatText(myFixture.getFile(),
+                ContainerUtil.newArrayList(myFixture.getFile().getTextRange()));
+      }
+    }.execute();
     myFixture.checkResultByFile("DefaultTestData.simple");
   }
 

@@ -36,7 +36,8 @@ for
 [Properties language plugin](upsource:///plugins/properties)
 
 
-The lifecycle of the PSI is described in more detail in [Fundamentals](/platform/fundamentals.md).
+The lifecycle of the PSI is described in more detail in
+[Architectural Overview](/basics/architectural_overview.md).
 
 The base classes for the PSI implementation, including
 [PsiFileBase](upsource:///platform/core-impl/src/com/intellij/extapi/psi/PsiFileBase.java),

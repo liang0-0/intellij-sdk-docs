@@ -1,7 +1,5 @@
 ---
 title: PHP Open API
-redirect_from:
-  - /phpstorm/php_open_api.html
 ---
 
 ## Using php-openapi

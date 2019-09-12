@@ -23,7 +23,7 @@ public class ImagesProjectViewPane extends AbstractProjectViewPSIPane {
 
   @Override
   public String getTitle() {
-    return "SDK-Images";
+    return "Images";
   }
 
   @Override
@@ -82,6 +82,11 @@ public class ImagesProjectViewPane extends AbstractProjectViewPSIPane {
   @Override
   protected ProjectViewTree createTree(DefaultTreeModel model) {
     return new ProjectViewTree(myProject, model) {
+      @Override
+      public DefaultMutableTreeNode getSelectedNode() {
+        return ImagesProjectViewPane.this.getSelectedNode();
+      }
+
       @Override
       public boolean isRootVisible() {
         return true;
