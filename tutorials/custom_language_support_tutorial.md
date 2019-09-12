@@ -4,12 +4,12 @@ title: Custom Language Support Tutorial
 
 In this tutorial we will add basic support for
 [.properties](https://en.wikipedia.org/wiki/.properties)
-language and it's usages within Java code.
+language and its usages within Java code.
 
 We will generate parser and PSI elements using
 [Grammar-Kit](https://github.com/JetBrains/Grammar-Kit) plugin.
 The lexer class will be generated with
-[JFlex](http://jflex.de/).
+[JFlex](https://jflex.de/).
 
 This a step-by-step tutorial and it requires performing every step:
 

@@ -8,7 +8,7 @@ Using Kotlin to write plugins for the IntelliJ Platform is very similar to writi
 
 In addition to [null safety](https://kotlinlang.org/docs/reference/null-safety.html) and [type-safe builders](https://kotlinlang.org/docs/reference/type-safe-builders.html), the Kotlin language offers a number of convenient features for plugin development, which make plugins easier to read and simpler to maintain. Much like [Kotlin for Android](https://kotlinlang.org/docs/tutorials/kotlin-android.html), the IntelliJ Platform makes extensive use of callbacks, which are easy to express as [lambdas](https://kotlinlang.org/docs/reference/lambdas.html) in Kotlin.
 
-Likewise, it is easy to customize the behavior of internal classes in IntelliJ IDEA, with [extensions](https://kotlinlang.org/docs/reference/extensions.html). For example, it is common practice to [guard logging statements](http://www.slf4j.org/faq.html#logging_performance) to avoid the cost of parameter construction, leading to the following ceremony when using the log:
+Likewise, it is easy to customize the behavior of internal classes in IntelliJ IDEA, with [extensions](https://kotlinlang.org/docs/reference/extensions.html). For example, it is common practice to [guard logging statements](https://www.slf4j.org/faq.html#logging_performance) to avoid the cost of parameter construction, leading to the following ceremony when using the log:
 
 ```java
 if(logger.isDebugEnabled()) {
@@ -34,7 +34,7 @@ Plugins targeting the IntelliJ Platform versions 143 and above are easy to migra
 
 ## 3. Kotlin Gradle Plugin
 
-For plugins already using the [Gradle Build System](build_system.md), or those that require precise control over the Kotlin build process, we recommend using the [kotlin-gradle-plugin](https://kotlinlang.org/docs/reference/using-gradle.html#configuring-dependencies). This [Gradle plugin](http://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin-core) greatly simplifies building Kotlin projects in a controlled and reproducible manner.
+For plugins already using the [Gradle Build System](build_system.md), or those that require precise control over the Kotlin build process, we recommend using the [kotlin-gradle-plugin](https://kotlinlang.org/docs/reference/using-gradle.html#configuring-dependencies). This [Gradle plugin](https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin-core) greatly simplifies building Kotlin projects in a controlled and reproducible manner.
 
 Your `build.gradle` file may look like so:
 
@@ -66,9 +66,9 @@ repositories {
 
 Please note that you should **not** include `kotlin-runtime` and `kotlin-stdlib` jars with your plugin because Kotlin guarantees backward- and forward- binary compatibility.
 
-### 3.1. Use Kotlin to write gradle script
+### 3.1. Use Kotlin to write Gradle script
 
-After gradle 4.4, gradle starts supporting `build.gradle.kts`, an alternative to `build.gradle` written in Kotlin.
+Starting with 4.4, Gradle supports `build.gradle.kts`, an alternative to `build.gradle` written in Kotlin.
 
 There're many good resources for learning how to write build scripts for an IntelliJ plugin with Kotlin script, like [intellij-rust](https://github.com/intellij-rust/intellij-rust/blob/master/build.gradle.kts), [julia-intellij](https://github.com/ice1000/julia-intellij/blob/master/build.gradle.kts), [covscript-intellij](https://github.com/covscript/covscript-intellij/blob/master/build.gradle.kts) or [zig-intellij](https://github.com/ice1000/zig-intellij/blob/master/build.gradle.kts).
 
@@ -84,7 +84,7 @@ buildscript {
 }
 
 plugins {
-	id("org.jetbrains.intellij") version "0.2.18"
+	id("org.jetbrains.intellij") version "0.4.5"
 	kotlin("jvm") version "1.2.30"
 }
 
